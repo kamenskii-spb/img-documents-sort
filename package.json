@@ -1,0 +1,21 @@
+{
+  "name": "sort-document-pdf",
+  "version": "1.0.0",
+  "description": "sort documents pdf",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "keywords": [
+    "pdf",
+    "documents",
+    "sort"
+  ],
+  "author": "kamenskii",
+  "license": "ISC",
+  "dependencies": {
+    "pdf-poppler": "^0.2.1",
+    "simple-json-db": "^1.2.3",
+    "tesseract.js": "^2.1.4"
+  }
+}
