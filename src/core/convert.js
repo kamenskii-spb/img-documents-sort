@@ -9,7 +9,7 @@ const pdfConvert = async (file, format = 'jpeg') => {
     out_dir: __dirname + "/../tmp",
     out_prefix: "pdf_in_" + format,
     page: null,
-    scale: 1600,
+    scale: 1300,
   }
 
   try {
