@@ -7,37 +7,49 @@ const JSONdb = require("simple-json-db")
 const db = new JSONdb(__dirname + "/core/database.json")
 
 
- console.log(JSON.parse(db.get("documents")))
+const dbDocuments = JSON.parse(db.get("documents"))
+
+console.log(dbDocuments)
 
 async function start() {
 
  const files = await fetchFiles()
  const documents = await fetchDocuments(files)
 
-  db.set("documents", JSON.stringify(documents))
+
+//if(!documents.length) db.set("documents", JSON.stringify(documents))
    
 }
 
- //start()
+ start()
 
 
 
  async function fetchDocuments (files) {
+    
 
   if(!files.length) return
 
 
     const documents = []
     for  await(const file of files) {
-      const pdfInJpg = await pdfConvert(__dirname + "/documents/" + file, "jpg")
+      const pdfInJpg = await pdfConvert(__dirname + "/documents/" + file, "png")
 
-     await Tesseract.recognize(pdfInJpg.path, "rus", {
-        logger: (e) => console.log(e),
+ 
+
+    //  if(dbDocuments.find( d => d.fileName !== file)){
+
+        console.log(file)
+
+    
+        await Tesseract.recognize(pdfInJpg.path, "rus", {
+        logger: (e) => console.log(e.progress),
       }).then((out) => {
         const text = out.data.text
 
         const document = {
-          seller: fetchBeetwin(text, "Продавец", "Адрес") || 'Не найден',
+          fileName: file,
+          seller: fetchBeetwin(text, "Продавец", "Адрес") || fetchBeetwin(text, "Грузополучатель", "Адрес") || 'Не найден',
           text: out.data.text,
           isCheck: false,
         }
@@ -45,6 +57,13 @@ async function start() {
           documents.push(document)
         
       })
+
+
+    //  }
+
+
+
+
   
     }
     return documents

@@ -1,14 +1,15 @@
 const path = require("path")
 const pdf = require("pdf-poppler")
 
-const pdfConvert = async (file, format = 'jpg') => {
+const pdfConvert = async (file, format = 'jpeg') => {
 
+    
   let opts = {
     format,
     out_dir: __dirname + "/../tmp",
     out_prefix: "pdf_in_" + format,
     page: null,
-    scale: 1800,
+    scale: 1600,
   }
 
   try {
